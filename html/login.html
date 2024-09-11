@@ -7,12 +7,19 @@
 </head>
 <body>
     <h2>Login</h2>
-    <form action="">
-        <label for="email">email:</label><br>
-        <input type="email" id="email" name="email" placeholder="Enter email"><br>
-        <label for="password">password:</label><br>
-        <input type="password" id="password" name="password" placeholder="Enter password"><br><br>
+    <form action="/api/login" method="post">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" placeholder="Enter email" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" placeholder="Enter password" required><br><br>
         <input type="submit" value="Login">
       </form> 
+
+      <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('error')) {
+            alert('Login failed. Please check your credentials and try again.');
+        }
+    </script>
 </body>
 </html>

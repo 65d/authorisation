@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"
+          href="style.css">
+</head>
+<body>
+    <nav id="nav">
+        <div class="controlpanel">Validation</div>
+        <section id="dynamic-buttons">
+            <!-- Buttons will be dynamically generated here -->
+            <button id="logout-btn">Log out</button>
+        </section>
+    </nav>
+    <script src="nav.js"></script>
+    <script>
+        const buttonData = [
+            { text: "Loading...", id: "data", url: "/active" },
+            { text: "Submit", id: "submit-btn", url: "/submit" },
+            { text: "Cancel", id: "cancel-btn", url: "/cancel" },
+            { text: "Retry", id: "retry-btn", url: "/retry" }
+        ];
+        generateButtons(buttonData);
+
+    </script>
+    <div class="container">
+       <div class="actives">test</div>
+       <div class="actives">test</div>
+       <div class="actives">test</div>
+       <div class="actives">test</div>
+       <div class="actives">test</div>
+    </div>
+
+
+    <!-- <script src="node_modules/html5-qrcode/html5-qrcode.min.js"></script> -->
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <script src="script.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Automatically fetch protected data when the page loads
+            fetch('/api/user-main-data', {
+                method: 'GET',
+                credentials: 'include' // Ensure cookies are sent with the request
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse JSON data
+                } else {
+                    throw new Error('Failed to fetch data');
+                }
+            })
+            .then(data => {
+                // Display data
+                document.getElementById('data').textContent = data.user.email;
+            })
+            .catch(error => {
+                // Handle errors and display appropriate message
+                document.getElementById('data').textContent = 'Error fetching data: ' + error.message;
+            });
+        });
+
+
+        document.getElementById('logout-btn').addEventListener('click', () => {
+                fetch('/api/logout', {
+                    method: 'GET',
+                    credentials: 'include' // Ensure cookies are sent with the request
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url; // Redirect to login page if redirected
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during logout:', error);
+                });
+            });
+
+
+
+
+
+
+
+
+
+            ////////////////////////////
+
+
+            
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all buttons
+            const buttons = document.querySelectorAll('button');
+
+            // Add the 'animate' class to each button with a delay
+            buttons.forEach((button, index) => {
+                setTimeout(() => {
+                    button.classList.add('animate');
+                }, index * 300); // Adjust delay time as needed
+            });
+        });
+   
+
+    </script>
+</body>
+</html>

@@ -27,11 +27,54 @@ nav button {
     border: 0;
     margin: 5px;
     padding: 5px 10px;
+    margin-left: 0;
+    transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+
 }
+
+
+
 nav button:hover {
     background-color: rgba(255, 255, 255, 0.242);
     
 }
+
+@keyframes cascade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0px);
+
+    }
+}
+
+/* Apply animation with delay */
+nav button.animate {
+    animation: cascade 0.3s ease forwards;
+}
+
+/* Delayed animation for each button */
+nav button :nth-child(1) {
+    animation-delay: 0s;
+}
+nav button :nth-child(2) {
+    animation-delay: 0.1s;
+}
+nav button :nth-child(3) {
+    animation-delay: 0.2s;
+}
+nav button :nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+
 .controlpanel {
     font-size: 18px;
     margin-left: 15px;
@@ -39,7 +82,7 @@ nav button:hover {
 }
 .container {
     width: 100%;
-    max-width: 500px;
+    max-width: 1100px;
     margin: 5px auto;
 }
 
@@ -95,8 +138,120 @@ button:hover {
     color: #1d9bf0;
 }
  
-video {
+/* video {
     width: 100% !important;
     border: 1px solid #b2b2b2 !important;
     border-radius: 0.25em;
+} */
+
+.actives {
+    /* height: 50px; */
+    width: 100%;
+    background-color: #d2d2d2;
+    margin-bottom: 5px;
+    
 }
+
+.a-generated {
+    background-color: green;
+}
+
+.a-validated, .a-expired {
+    background-color: red;
+}
+
+.aclive {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+/* 
+.menu-btn {
+	width: 30px;
+	height: 30px;
+	position: relative;
+	z-index:2;
+	overflow: hidden;
+}
+
+.menu-btn .bar {
+	width: 30px;
+	height: 4px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+  border-radius: 4px;
+	transform: translate(-50%, -50%);
+	background-color: blue;
+	transition: all 0.3s ease-in-out;
+}
+
+.menu-btn .bar:nth-of-type(2) {
+	top: calc(50% - 9px);
+}
+.menu-btn .bar:nth-of-type(3) {
+	top: calc(50% + 9px);
+}
+
+.menu-btn.active .bar:nth-of-type(1) {
+  display: none;
+}
+.menu-btn.active .bar:nth-of-type(2) {
+  top: 50%;
+  transform: translate(-50%, 0%) rotate(45deg);  
+}
+.menu-btn.active .bar:nth-of-type(3) {
+  top: 50%;
+  transform: translate(-50%, 0%) rotate(-45deg); 
+} */
+@media only screen and (max-width: 600px) {
+    #dynamic-buttons {
+        position: fixed;
+    right: 5px;
+    top: 55px;
+    z-index: 99;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    border-radius: 7px;
+        opacity: 0;
+        pointer-events: none;
+}
+    nav {
+        height: 50px;
+        width: 100%;
+    }
+
+    .active-dynamic-buttons {
+        opacity: 1 !important;
+        pointer-events: all !important;
+        }
+
+
+}
+
+@import "modal.css"; /* Using a string */
+
+
+/* .nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 15px;
+    background: #FFEFBA;
+	transform: translateX(100%);
+	transition: transform 0.5s; 
+}
+
+.nav.active {
+	transform: translateX(0);
+}
+
+.nav .nav__list_item {
+	list-style-type: none;
+} */

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"
+          href="style.css">
+</head>
+<body>
+    <nav id="nav">
+        <div class="controlpanel">Validation</div>
+        <section id="dynamic-buttons">
+            <!-- Buttons will be dynamically generated here -->
+            <button id="logout-btn">Log out</button>
+        </section>
+    </nav>
+    <script src="nav.js"></script>
+    <script>
+        const buttonData = [
+            { text: "Loading...", id: "data", url: "/active" },
+            { text: "Validation", id: "submit-btn", url: "/validation" },
+            
+        ];
+        generateButtons(buttonData);
+
+    </script>
+
+
+    <div class="container">
+        <div id="activitiees-container" class="activitiees-container">
+
+        </div>
+            
+        <input onchange="UpdateQRCode(this.value)" value="Hello World..."/><br>
+        
+    </div>
+
+
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Automatically fetch protected data when the page loads
+            fetch('/api/user-main-data', {
+                method: 'GET',
+                credentials: 'include' // Ensure cookies are sent with the request
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse JSON data
+                } else {
+                    throw new Error('Failed to fetch data');
+                }
+            })
+            .then(data => {
+                // Display data
+                document.getElementById('data').textContent = data.user.email;
+            })
+            .catch(error => {
+                // Handle errors and display appropriate message
+                document.getElementById('data').textContent = 'Error fetching data: ' + error.message;
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Automatically fetch protected data when the page loads
+            fetch('/api/get-tikets', {
+                method: 'GET',
+                credentials: 'include' // Ensure cookies are sent with the request
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse JSON data
+                } else {
+                    throw new Error('Failed to fetch data');
+                }
+            })
+            .then(data => {
+                let container = document.getElementById("activitiees-container");
+
+                for (let datao in data) {
+                    // Create a new HTML element (e.g., a div)
+                    let newElement = document.createElement("div");
+                    newElement.className = 'actives';
+                    newElement.classList.add("a-"+data[datao].status)
+                    // Set the content of the element to the current record
+                    newElement.innerHTML = '<div class="aclive">' + data[datao].qr_code + " | " + data[datao].expiration_date + '<img src="https://api.qrserver.com/v1/create-qr-code/?data='+ data[datao].qr_code +'&amp;size=100x100"/></div>'
+
+                    // Append the new element to the container
+                    container.appendChild(newElement);
+                }
+                
+                // document.getElementById('activitiees-container').textContent = data.user.email;
+            })
+            .catch(error => {
+                // Handle errors and display appropriate message
+                document.getElementById('data').textContent = 'Error fetching data: ' + error.message;
+            });
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', () => {
+                fetch('/api/logout', {
+                    method: 'GET',
+                    credentials: 'include' // Ensure cookies are sent with the request
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url; // Redirect to login page if redirected
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during logout:', error);
+                });
+            });
+
+
+
+
+//             function UpdateQRCode(val){
+//     document.getElementById("qrcode").setAttribute("src","https://api.mimfa.net/qrcode?value="+encodeURIComponent(val)+"&as=value");
+// }
+// document.addEventListener("DOMContentLoaded", function(){
+//     UpdateQRCode(document.getElementById("qrcode").value);
+// });
+
+
+
+
+            ////////////////////////////
+
+
+            
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all buttons
+            const buttons = document.querySelectorAll('button');
+
+            // Add the 'animate' class to each button with a delay
+            buttons.forEach((button, index) => {
+                setTimeout(() => {
+                    button.classList.add('animate');
+                }, index * 300); // Adjust delay time as needed
+            });
+        });
+   
+
+    </script>
+</body>
+</html>
